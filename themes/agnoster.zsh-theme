@@ -108,6 +108,17 @@ prompt_dir() {
   prompt_segment blue black '%~'
 }
 
+prompt_drush_alias() {
+  f="${TMPDIR:-/tmp/}/drush-env/drush-drupal-site-$$"
+  if [ -f $f ]
+  then
+    DRUPAL_SITE=$(cat "$f")
+    DRUPAl_SITE=${DRUPAL_SITE#"|"}
+  fi
+
+  [[ -n "$DRUPAL_SITE" ]] && prompt_segment black default "⮄ $DRUPAL_SITE"
+}
+
 # Status:
 # - was there an error
 # - am I root
@@ -127,6 +138,7 @@ build_prompt() {
   RETVAL=$?
   prompt_status
   prompt_context
+  prompt_drush_alias
   prompt_dir
   prompt_git
   prompt_svn
