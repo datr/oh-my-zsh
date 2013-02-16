@@ -83,6 +83,26 @@ prompt_git() {
   fi
 }
 
+# Svn: branch, dirty status
+prompt_svn() {
+  local branch dirty
+  if [ $(in_svn) ]; then
+    ZSH_THEME_SVN_PROMPT_DIRTY='±'
+    ZSH_THEME_SVN_PROMPT_CLEAN=''
+    dirty=$(svn_dirty)
+
+    branch=$(svn_get_branch_name)
+
+    if [[ -n $dirty ]]; then
+      prompt_segment yellow black
+    else
+      prompt_segment green black
+    fi
+
+    echo -n "⭠ $branch$dirty"
+  fi
+}
+
 # Dir: current working directory
 prompt_dir() {
   prompt_segment blue black '%~'
@@ -109,6 +129,7 @@ build_prompt() {
   prompt_context
   prompt_dir
   prompt_git
+  prompt_svn
   prompt_end
 }
 
