@@ -15,7 +15,7 @@ $ZSH_THEME_REPO_NAME_COLOR$_DISPLAY$ZSH_PROMPT_BASE_COLOR$ZSH_THEME_SVN_PROMPT_S
 
 
 function in_svn() {
-    if [[ -d .svn ]]; then
+    if $(svn info >/dev/null 2>&1); then
         echo 1
     fi
 }
